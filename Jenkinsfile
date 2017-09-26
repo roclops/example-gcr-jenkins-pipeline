@@ -8,7 +8,9 @@
 node {
     currentBuild.result = "SUCCESS"
     def GCP_PROJECT = sh (returnStdout: true, script: 'gcloud config get-value project').trim()
-    def IMAGE_TAG = "gcr.io/${GCP_PROJECT}/${env.APP_NAME}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
+    def IMAGE_NAME = 'example-gcr'
+    def VERSION = readFile('VERSION').trim()
+    def IMAGE_TAG = "gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
 
     checkout scm
 
@@ -18,7 +20,7 @@ node {
         }
 
         stage('Build Docker image using Google Container Registry') {
-            print "Building container [gcr.io/${GCP_PROJECT}/${env.APP_NAME}]"
+            print "Building container [gcr.io/${GCP_PROJECT}/${IMAGE_NAME}]"
             sh "gcloud container builds submit . --tag ${IMAGE_TAG}"
         }
 
