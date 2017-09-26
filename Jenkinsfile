@@ -9,7 +9,7 @@ node {
     currentBuild.result = "SUCCESS"
     def GCP_PROJECT = sh(returnStdout: true, script: 'gcloud config get-value project').trim()
 
-    sh 'ls'
+    sh returnStdout: true, script: 'ls -l'
 
     def BUILD_CONFIG = readYaml(file: 'build.yaml')
     def IMAGE_NAME = BUILD_CONFIG.image_name
