@@ -8,9 +8,10 @@
 node {
     currentBuild.result = "SUCCESS"
     def GCP_PROJECT = sh (returnStdout: true, script: 'gcloud config get-value project').trim()
-    def IMAGE_NAME = 'example-gcr'
-    def VERSION = readFile('VERSION').trim()
-    def IMAGE_TAG = "gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
+    def BUILD_CONFIG = readYaml file: build.yaml
+    def IMAGE_NAME = BUILD_CONFIG.image_name
+    def VERSION = BUILD_CONFIG.version
+    def IMAGE_TAG = "gcr.io/${GCP_PROJECT}/${IMAGE_NAME}:${env.BRANCH_NAME}-${VERSION}.${env.BUILD_NUMBER}"
 
     checkout scm
 
