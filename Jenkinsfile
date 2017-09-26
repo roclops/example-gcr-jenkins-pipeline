@@ -13,6 +13,10 @@ node {
     checkout scm
 
     try {
+        stage('Printing out environment info') {
+            echo env.getEnvironment()
+        }
+
         stage('Build Docker image using Google Container Registry') {
             print "Building container [gcr.io/${GCP_PROJECT}/${env.APP_NAME}]"
             sh "gcloud container builds submit . --tag ${IMAGE_TAG}"
