@@ -8,7 +8,7 @@
 node {
     currentBuild.result = "SUCCESS"
     def GCP_PROJECT = sh (returnStdout: true, script: 'gcloud config get-value project').trim()
-    def IMAGE_TAG = "gcr.io/${GCP_PROJECT}/${env.APP_NAME}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
+    def IMAGE_TAG = "gcr.io/${GCP_PROJECT}/${env.APP_NAME}:${env.GIT_BRANCH}.${env.BUILD_NUMBER}"
 
     checkout scm
 
