@@ -14,7 +14,7 @@ node {
 
     try {
         stage('Printing out environment info') {
-            echo env.getEnvironment()
+            sh "printenv"
         }
 
         stage('Build Docker image using Google Container Registry') {
